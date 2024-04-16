@@ -66,7 +66,7 @@ export function analyzeSpringBootProject(proyecto: string, rules: any): any {
                     }
                     if (pass) {
                         report[rules.rules[0].category].push({
-                            message: `En el atributo en la línea <b>${node.start.line}</b> del archivo ${filePath}`,
+                            message: `En el atributo en la línea ${node.start.line} del archivo ${filePath}`,
                             severity: rules.rules[0].severity,
                             name: rules.rules[0].name,
                             id: rules.rules[0].id,
@@ -89,7 +89,7 @@ export function analyzeSpringBootProject(proyecto: string, rules: any): any {
                     }
                     if (pass) {
                         report[rules.rules[8].category].push({
-                            message: `En el atributo en la línea <b>${node.start.line}</b> del archivo ${filePath}`,
+                            message: `En el atributo en la línea ${node.start.line} del archivo ${filePath}`,
                             severity: rules.rules[8].severity,
                             name: rules.rules[8].name,
                             id: rules.rules[8].id,
@@ -105,7 +105,7 @@ export function analyzeSpringBootProject(proyecto: string, rules: any): any {
                     for (const nodei of node.classBody().classBodyDeclaration()) {
                         if(!nodei.modifier()[0]?.classOrInterfaceModifier()?.annotation()?.qualifiedName()?.identifier()[0].IDENTIFIER()?.symbol.text?.includes("Autowired") && nodei.memberDeclaration()?.fieldDeclaration() !== undefined) {
                             report[rules.rules[3].category].push({
-                                message: `En el atributo en la línea <b>${node.start.line}</b> del archivo ${filePath}`,
+                                message: `En el atributo en la línea ${node.start.line} del archivo ${filePath}`,
                                 severity: rules.rules[3].severity,
                                 name: rules.rules[3].name,
                                 id: rules.rules[3].id,
@@ -122,7 +122,7 @@ export function analyzeSpringBootProject(proyecto: string, rules: any): any {
                     for (const nodei of node.classBody().classBodyDeclaration()) {
                         if(!nodei.modifier()[0]?.classOrInterfaceModifier()?.annotation()?.qualifiedName()?.identifier()[0].IDENTIFIER()?.symbol.text?.includes("Autowired") && nodei.memberDeclaration()?.fieldDeclaration() !== undefined) {
                             report[rules.rules[6].category].push({
-                                message: `En el atributo en la línea <b>${node.start.line}</b> del archivo ${filePath}`,
+                                message: `En el atributo en la línea ${node.start.line} del archivo ${filePath}`,
                                 severity: rules.rules[6].severity,
                                 name: rules.rules[6].name,
                                 id: rules.rules[6].id,
@@ -142,7 +142,7 @@ export function analyzeSpringBootProject(proyecto: string, rules: any): any {
                             if(!nodea?.identifier()[0].IDENTIFIER()?.symbol.text?.includes("DetailDTO")) {
                                 if(!nodea?.typeArguments()[0]?.typeArgument()[0]?.typeType()?.classOrInterfaceType()?.identifier()[0].IDENTIFIER()?.symbol.text?.includes("DetailDTO")) {
                                     report[rules.rules[9].category].push({
-                                        message: `En el método en la línea <b>${node.start.line}</b> del archivo ${filePath}`,
+                                        message: `En el método en la línea ${node.start.line} del archivo ${filePath}`,
                                         severity: rules.rules[9].severity,
                                         name: rules.rules[9].name,
                                         id: rules.rules[9].id,
@@ -160,7 +160,7 @@ export function analyzeSpringBootProject(proyecto: string, rules: any): any {
                 if(node.identifier().IDENTIFIER().symbol.text?.includes("DTO")) {
                     if((node.parent?.childCount ?? 0).toString() === '2') {
                         report[rules.rules[7].category].push({
-                            message: `En la clase en la línea <b>${node.start.line}</b> del archivo ${filePath}`,
+                            message: `En la clase en la línea ${node.start.line} del archivo ${filePath}`,
                             severity: rules.rules[7].severity,
                             name: rules.rules[7].name,
                             id: rules.rules[7].id,
@@ -175,7 +175,7 @@ export function analyzeSpringBootProject(proyecto: string, rules: any): any {
                 if(node.identifier().IDENTIFIER().symbol.text?.includes("Entity") && !node.identifier().IDENTIFIER().symbol.text?.includes("Test") && !node.identifier().IDENTIFIER().symbol.text?.includes("Exception")){
                     if((node.parent?.childCount ?? 0).toString() === '2') {
                         report[rules.rules[1].category].push({
-                            message: `En la clase en la línea <b>${node.start.line}</b> del archivo ${filePath}`,
+                            message: `En la clase en la línea ${node.start.line} del archivo ${filePath}`,
                             severity: rules.rules[1].severity,
                             name: rules.rules[1].name,
                             id: rules.rules[1].id,
@@ -190,7 +190,7 @@ export function analyzeSpringBootProject(proyecto: string, rules: any): any {
                 if(node.identifier().IDENTIFIER().symbol.text?.includes("Service") && !node.identifier().IDENTIFIER().symbol.text?.includes("Test") && !node.identifier().IDENTIFIER().symbol.text?.includes("Exception")) {
                     if((node.parent?.childCount ?? 0).toString() === '2') {
                         report[rules.rules[2].category].push({
-                            message: `En la clase en la línea <b>${node.start.line}</b> del archivo ${filePath}`,
+                            message: `En la clase en la línea ${node.start.line} del archivo ${filePath}`,
                             severity: rules.rules[2].severity,
                             name: rules.rules[2].name,
                             id: rules.rules[2].id,
@@ -205,7 +205,7 @@ export function analyzeSpringBootProject(proyecto: string, rules: any): any {
                 if(node.identifier().IDENTIFIER().symbol.text?.includes("Controller")) {
                     if((node.parent?.childCount ?? 0).toString() === '2') {
                         report[rules.rules[4].category].push({
-                            message: `En la clase en la línea <b>${node.start.line}</b> del archivo ${filePath}`,
+                            message: `En la clase en la línea ${node.start.line} del archivo ${filePath}`,
                             severity: rules.rules[4].severity,
                             name: rules.rules[4].name,
                             id: rules.rules[4].id,
@@ -220,7 +220,7 @@ export function analyzeSpringBootProject(proyecto: string, rules: any): any {
                 if(node.identifier().IDENTIFIER().symbol.text?.includes("Controller")) {
                     if((node.parent?.childCount ?? 0).toString() === '2') {
                         report[rules.rules[5].category].push({
-                            message: `En la clase en la línea <b>${node.start.line}</b> del archivo ${filePath}`,
+                            message: `En la clase en la línea ${node.start.line} del archivo ${filePath}`,
                             severity: rules.rules[5].severity,
                             name: rules.rules[5].name,
                             id: rules.rules[5].id,
@@ -289,7 +289,7 @@ export function analyzeSpringBootProject(proyecto: string, rules: any): any {
             for (const rule of rules.rules) {
                 if (rule.id.toString() === '2') {
                     report[rule.category].push({
-                        message: `En la entidad de la línea <b>${annotation.classNode.start.line}</b> del archivo ${annotation.filePath}`,
+                        message: `En la entidad de la línea ${annotation.classNode.start.line} del archivo ${annotation.filePath}`,
                         severity: rule.severity,
                         name: rule.name,
                         id: rule.id,
@@ -322,7 +322,7 @@ export function analyzeSpringBootProject(proyecto: string, rules: any): any {
             for (const rule of rules.rules) {
                 if (rule.id.toString() === '3') {
                     report[rule.category].push({
-                        message: `En la clase de lógica de la línea <b>${annotation.classNode.start.line}</b> del archivo ${annotation.filePath}`,
+                        message: `En la clase de lógica de la línea ${annotation.classNode.start.line} del archivo ${annotation.filePath}`,
                         severity: rule.severity,
                         name: rule.name,
                         id: rule.id,
@@ -359,7 +359,7 @@ export function analyzeSpringBootProject(proyecto: string, rules: any): any {
             for (const rule of rules.rules) {
                 if (rule.id.toString() === '5') {
                     report[rule.category].push({
-                        message: `En la clase de controladores de la línea <b>${annotation.classNode.start.line}</b> del archivo ${annotation.filePath}`,
+                        message: `En la clase de controladores de la línea ${annotation.classNode.start.line} del archivo ${annotation.filePath}`,
                         severity: rule.severity,
                         name: rule.name,
                         id: rule.id,
@@ -396,7 +396,7 @@ export function analyzeSpringBootProject(proyecto: string, rules: any): any {
             for (const rule of rules.rules) {
                 if (rule.id.toString() === '6') {
                     report[rule.category].push({
-                        message: `En la clase de controladores de la línea <b>${annotation.classNode.start.line}</b> del archivo ${annotation.filePath}`,
+                        message: `En la clase de controladores de la línea ${annotation.classNode.start.line} del archivo ${annotation.filePath}`,
                         severity: rule.severity,
                         name: rule.name,
                         id: rule.id,
@@ -431,7 +431,7 @@ export function analyzeSpringBootProject(proyecto: string, rules: any): any {
             for (const rule of rules.rules) {
                 if (rule.id.toString() === '8') {
                     report[rule.category].push({
-                        message: `En la clase DTO de la línea <b>${annotation.classNode.start.line}</b> del archivo ${annotation.filePath}`,
+                        message: `En la clase DTO de la línea ${annotation.classNode.start.line} del archivo ${annotation.filePath}`,
                         severity: rule.severity,
                         name: rule.name,
                         id: rule.id,
