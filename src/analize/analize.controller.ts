@@ -17,11 +17,26 @@ export class AnalizeController {
     async clonePrivateRepo(@Body() body: { url: string; token: string; type: string }): Promise<Report> {
         const { url, token, type } = body;
         const repoPath = path.join(__dirname, 'tempRepo');
-        let nameRepo = url.split('/')[url.split('/').length - 1];
+        let urlRepo = url;
+        if (url.startsWith('git')) {
+            const urlArray = url.split(':');
+            urlArray[0] = 'https://github.com';
+            urlArray[1] = urlArray[1].slice(0, -4);
+            urlRepo = urlArray.join('/');
+        }
+        let branch = '';
+        let nameRepo = urlRepo.split('/')[urlRepo.split('/').length - 1];
         nameRepo = nameRepo.slice(0, -4);
-        const user = url.split('/')[url.split('/').length - 2];
+        const user = urlRepo.split('/')[urlRepo.split('/').length - 2];
         const cloneCommand = `git clone https://${token}@github.com/${user}/${nameRepo}.git ${repoPath}`;
 
+        exec(`git branch --show-current`, (error, stdout) => {
+            if (error) {
+                console.error('Error al obtener la rama actual:', error);
+            }
+            branch = stdout;
+        });
+        branch = branch.replace('\n', '');
         const springRulesPath = path.join(__dirname, '../../src/rules/spring.json');
         const rulesSpringBootContent = fs.readFileSync(springRulesPath, 'utf8');
 	    const rulesSpringBoot = JSON.parse(rulesSpringBootContent);
@@ -36,6 +51,7 @@ export class AnalizeController {
     
         // Función para crear un issue
         async function createIssue(owner: string, repo: string, issue: { title: string, body: string }) {
+            console.log(issue);
             const url = `https://api.github.com/repos/${owner}/${repo}/issues`;
             const response = await axios.post(url, issue, config);
             return response.data;
@@ -47,14 +63,13 @@ export class AnalizeController {
                 if (error) {
                     reject({line: 'Error at cloning the repo: ' + error});
                 }
-
-                //TODO: Analizar el código del repositorio clonado
                 if (type === 'spring') {
-                    const report = analyzeSpringBootProject(repoPath, rulesSpringBoot);
+                    const report = analyzeSpringBootProject(repoPath, rulesSpringBoot, urlRepo, branch);
                     for (const rule of report['Capa de persistencia']) {
                         const issue = {
-                            title: rule.name,
-                            body: rule.message
+                            title: "Issue: " + rule.name,
+                            body: rule.message,
+                            labels: ['smell', rule.severity, 'SmellSpringID' + rule.id]
                         };
                         createIssue(user, nameRepo, issue)
                         .then(data => console.log(`Issue creado: ${data.url}`))
@@ -62,8 +77,9 @@ export class AnalizeController {
                     }
                     for (const rule of report['Capa de lógica']) {
                         const issue = {
-                            title: rule.name,
-                            body: rule.message
+                            title: "Issue: " + rule.name,
+                            body: rule.message,
+                            labels: ['smell', rule.severity, 'SmellSpringID' + rule.id]
                         };
                         createIssue(user, nameRepo, issue)
                         .then(data => console.log(`Issue creado: ${data.url}`))
@@ -71,8 +87,9 @@ export class AnalizeController {
                     }
                     for (const rule of report['Capa de controladores']) {
                         const issue = {
-                            title: rule.name,
-                            body: rule.message
+                            title: "Issue: " + rule.name,
+                            body: rule.message,
+                            labels: ['smell', rule.severity, 'SmellSpringID' + rule.id]
                         };
                         createIssue(user, nameRepo, issue)
                         .then(data => console.log(`Issue creado: ${data.url}`))
@@ -80,9 +97,9 @@ export class AnalizeController {
                     }
                     resolve(report);               
                 } else if (type === 'nest') {
-                        
+                    //TODO: Implementar la lógica para analizar un proyecto de NestJS
                 } else if (type === 'angular') {
-
+                    //TODO: Implementar la lógica para analizar un proyecto de Angular
                 }
 
                 // Eliminar el repositorio clonado
