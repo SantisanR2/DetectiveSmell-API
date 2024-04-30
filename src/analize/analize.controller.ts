@@ -5,6 +5,7 @@ import { exec } from 'child_process';
 import { Report } from './report.entity';
 import { analyzeSpringBootProject } from './spring';
 import axios from 'axios';
+import { analyzeNestJsProject } from './nestjs';
 
 @Controller('analize')
 export class AnalizeController {
@@ -40,6 +41,10 @@ export class AnalizeController {
         const springRulesPath = path.join(__dirname, '../../src/rules/spring.json');
         const rulesSpringBootContent = fs.readFileSync(springRulesPath, 'utf8');
 	    const rulesSpringBoot = JSON.parse(rulesSpringBootContent);
+
+        const nestRulesPath = path.join(__dirname, '../../src/rules/enPruebas.json');
+        const rulesNestContent = fs.readFileSync(nestRulesPath, 'utf8');
+	    const rulesNest = JSON.parse(rulesNestContent);
 
         // Configuración para las solicitudes de la API de GitHub
         const config = {
@@ -98,6 +103,49 @@ export class AnalizeController {
                     resolve(report);               
                 } else if (type === 'nest') {
                     //TODO: Implementar la lógica para analizar un proyecto de NestJS
+                    const report = analyzeNestJsProject(repoPath,rulesNest, urlRepo, branch)
+                    for (const rule of report['Persistence Layer']) {
+                        const issue = {
+                            title: "Issue: " + rule.name,
+                            body: rule.message,
+                            labels: ['smell', rule.severity, 'SmellSpringID' + rule.id]
+                        };
+                        createIssue(user, nameRepo, issue)
+                        .then(data => console.log(`Issue creado: ${data.url}`))
+                        .catch(error => console.error(`Error al crear el issue: ${error}`));
+                    }
+                    for (const rule of report['Logic Layer']) {
+                        const issue = {
+                            title: "Issue: " + rule.name,
+                            body: rule.message,
+                            labels: ['smell', rule.severity, 'SmellSpringID' + rule.id]
+                        };
+                        createIssue(user, nameRepo, issue)
+                        .then(data => console.log(`Issue creado: ${data.url}`))
+                        .catch(error => console.error(`Error al crear el issue: ${error}`));
+                    }
+                    for (const rule of report['Controller Layer']) {
+                        const issue = {
+                            title: "Issue: " + rule.name,
+                            body: rule.message,
+                            labels: ['smell', rule.severity, 'SmellSpringID' + rule.id]
+                        };
+                        createIssue(user, nameRepo, issue)
+                        .then(data => console.log(`Issue creado: ${data.url}`))
+                        .catch(error => console.error(`Error al crear el issue: ${error}`));
+                    }
+                    for (const rule of report['DTO Layer']) {
+                        const issue = {
+                            title: "Issue: " + rule.name,
+                            body: rule.message,
+                            labels: ['smell', rule.severity, 'SmellSpringID' + rule.id]
+                        };
+                        createIssue(user, nameRepo, issue)
+                        .then(data => console.log(`Issue creado: ${data.url}`))
+                        .catch(error => console.error(`Error al crear el issue: ${error}`));
+                    }
+                    resolve(report);
+                    
                 } else if (type === 'angular') {
                     //TODO: Implementar la lógica para analizar un proyecto de Angular
                 }

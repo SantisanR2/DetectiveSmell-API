@@ -1,0 +1,84 @@
+{
+    "rules": [
+      {
+        "id": "1",
+        "name": "Primitive Attributes",
+        "description": "All entity attributes are objects (not primitives). For example, Integer is used instead of int or Float is used instead of float.",
+        "severity": "Grave",
+        "example": "",
+        "category": "Persistence Layer"
+      },
+      {
+        "id": "2",
+        "name": "Annotation in Entity Class",
+        "description": "All entities have the @Data annotation from lombok.",
+        "severity": "Grave",
+        "example": "@Data <br>@Entity",
+        "category": "Persistence Layer"
+      },
+      {
+        "id": "3",
+        "name": "Annotation in Service Class",
+        "description": "All logic classes have the @Service annotation.",
+        "severity": "Grave",
+        "example": "@Service <br> export class AppService {}",
+        "category": "Logic Layer"
+      },
+      {
+        "id": "4",
+        "name": "Annotation in Logic Class Attributes",
+        "description": "All logic classes have persistence attributes (Repositories) annotated with @Autowired.",
+        "severity": "Grave",
+        "example": "",
+        "category": "Logic Layer"
+      },
+      {
+        "id": "5",
+        "name": "Annotation in Controller Class",
+        "description": "All controller classes have the @Controller annotation.",
+        "severity": "Moderado",
+        "example": "@Service <br> @Controller <br> export class AppController {}",
+        "category": "Controller Layer"
+      },
+      {
+        "id": "6",
+        "name": "RequestMapping Annotation in Controller Class",
+        "description": "All controller classes have the @RequestMapping annotation.",
+        "severity": "Moderado",
+        "example": "@Service <br> @Controller <br> export class AppController {}",
+        "category": "Controller Layer"
+      },
+      {
+        "id": "7",
+        "name": "Annotation in Controller Class Attributes",
+        "description": "All controller classes have service class attributes annotated with @Autowired.",
+        "severity": "Grave",
+        "example": "",
+        "category": "Controller Layer"
+      },
+      {
+        "id": "8",
+        "name": "GET Return Type in Controllers",
+        "description": "All GET type methods must return attributes of type DetailDTO.",
+        "severity": "Moderado",
+        "example": "",
+        "category": "Controller Layer"
+      },
+      {
+        "id": "9",
+        "name": "Data Annotation in DTO and DetailDTO",
+        "description": "All DTO and DetailDTO classes have the @Data annotation from Lombok.",
+        "severity": "Moderado",
+        "example": "@Data <br>",
+        "category": "DTO Layer"
+      },
+      {
+        "id": "10",
+        "name": "Attribute Type in DTO and DetailDTO Classes",
+        "description": "All class attributes are serializable.",
+        "severity": "Moderado",
+        "example": "",
+        "category": "DTO Layer"
+      }
+    ]
+  }
