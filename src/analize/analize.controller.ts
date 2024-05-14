@@ -6,6 +6,7 @@ import { Report } from './report.entity';
 import { analyzeSpringBootProject } from './spring';
 import axios from 'axios';
 import { analyzeNestJsProject } from './nestjs';
+import { analyzeAngular } from './angular';
 
 @Controller('analize')
 export class AnalizeController {
@@ -45,6 +46,10 @@ export class AnalizeController {
         const nestRulesPath = path.join(__dirname, '../../src/rules/enPruebas.json');
         const rulesNestContent = fs.readFileSync(nestRulesPath, 'utf8');
 	    const rulesNest = JSON.parse(rulesNestContent);
+
+        const angularRulesPath = path.join(__dirname, '../../src/rules/angular.json');
+        const rulesAngularContent = fs.readFileSync(angularRulesPath, 'utf8');
+	    const rulesAngular = JSON.parse(rulesAngularContent);
 
         // Configuración para las solicitudes de la API de GitHub
         const config = {
@@ -147,7 +152,28 @@ export class AnalizeController {
                     resolve(report);
                     
                 } else if (type === 'angular') {
-                    //TODO: Implementar la lógica para analizar un proyecto de Angular
+                    const report = analyzeAngular(repoPath, rulesAngular, urlRepo, branch);
+                    for (const rule of report['Capa de infraestructura']) {
+                        const issue = {
+                            title: "Issue: " + rule.name,
+                            body: rule.message,
+                            labels: ['smell', rule.severity, 'SmellAngularID' + rule.id]
+                        };
+                        createIssue(user, nameRepo, issue)
+                        .then(data => console.log(`Issue creado: ${data.url}`))
+                        .catch(error => console.error(`Error al crear el issue: ${error}`));
+                    }
+                    for (const rule of report['Capa de módulos']) {
+                        const issue = {
+                            title: "Issue: " + rule.name,
+                            body: rule.message,
+                            labels: ['smell', rule.severity, 'SmellAngularID' + rule.id]
+                        };
+                        createIssue(user, nameRepo, issue)
+                        .then(data => console.log(`Issue creado: ${data.url}`))
+                        .catch(error => console.error(`Error al crear el issue: ${error}`));
+                    }
+                    resolve(report);        
                 }
 
                 // Eliminar el repositorio clonado
