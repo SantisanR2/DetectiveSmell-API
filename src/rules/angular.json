@@ -1,0 +1,27 @@
+{
+    "rules": [
+      {
+        "id": "1",
+        "name": "No debería haber servicios ni componentes a nivel de la carpeta 'app' que no sean los propios de 'app'",
+        "description": "Esta regla asegura que se tenga un control y buen manejo de las carpetas",
+        "example": "Carpeta: App Archivos: app.component.ts",
+        "category": "Capa de infraestructura",
+        "severity": "Moderado"
+      },
+      {
+        "id": "2",
+        "name": "Los nombres de las carpetas (módulos) deben coincidir con sus archivos",
+        "description": "Esta regla ayuda a mejorar la legibilidad, la comprensión y la coherencia en el desarrollo de aplicaciones Angular",
+        "example": "Carpeta: Clase Archivo: clase.ts",
+        "category": "Capa de infraestructura",
+        "severity": "Grave"
+      },
+      {
+        "id": "3",
+        "name": "Los nombres de los módulos deben estar en singular",
+        "description": "Esta regla garantiza ayudar a mantener la consistencia en todo el proyecto",
+        "example": "Modulo: clase.module.ts",
+        "category": "Capa de módulos",
+        "severity": "Leve"
+      }]
+    }
